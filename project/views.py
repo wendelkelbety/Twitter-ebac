@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 @login_required
 def home(request):
 	posts = Post.objects.all()
+	profile = Profile.objects.all()
 	if request.method == 'POST':
 		form = PostForm(request.POST)
 		if form.is_valid():
@@ -21,7 +22,7 @@ def home(request):
 	else:
 		form = PostForm()
 
-	context = {'posts':posts, 'form' : form }
+	context = {'profiles':profile ,'posts':posts, 'form' : form }
 	return render(request, 'twitter/newsfeed.html', context)
 
 def register(request):
@@ -48,7 +49,8 @@ def delete(request, post_id):
 def profile(request, username):
 	user = User.objects.get(username=username)
 	posts = user.posts.all()
-	context = {'user':user, 'posts':posts}
+	profile = Profile.objects.all()
+	context = {'profiles':profile, 'user':user, 'posts':posts}
 	return render(request, 'twitter/profile.html', context)
 
 @login_required

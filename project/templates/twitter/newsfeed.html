@@ -20,7 +20,7 @@
                         {{ request.user.profile.followers.count }} Seguidores
                         {{ request.user.profile.following.count }} seguindo
                         </h6>
-                        <a href="#" class="btn  text-white rounded-pill">perfil</a>
+                        <a href="{% url 'profile' request.user %}" class="btn  text-white rounded-pill">perfil</a>
                     </div>
 
                 </div>
@@ -152,9 +152,13 @@
                     Quem seguir
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" style="text-decoration: none;color: black;">@EBAC</a></li>
-                    <li class="list-group-item"><a href="#" style="text-decoration: none;color: black;">@EBAC</a></li>
-                    <li class="list-group-item"><a href="#" style="text-decoration: none;color: black;">@EBAC</a></li>
+                    {% for profile in profiles %}
+                        {% if request.user != profile.user %}
+                            <li class="list-group-item"><a href="{% url 'profile' profile.user %}" style="text-decoration: none;color: black;">{{ profile.user }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <!--<li class="list-group-item"><a href="#" style="text-decoration: none;color: black;">@EBAC</a></li>
+                    <li class="list-group-item"><a href="#" style="text-decoration: none;color: black;">@EBAC</a></li>-->
                 </ul>
             </div>
         </div>
